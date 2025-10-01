@@ -11,17 +11,10 @@ const authStore = create(persist(
         email: "",
         loading: false, 
 
-        // Register User
         registerUser: async (data) => {
+            set({ loading: true, error: null, success: null, message: null, user: null });
             try {
-                set({
-                    loading: true,
-                    error: null,
-                    success: null,
-                    message: null,
-                    user: null,
-                })
-                const response = await authApi.post("/register", {data});
+                const response = await authApi.post("/register", { data });
                 if (response.data.success) {
                     set({
                         loading: false,
@@ -30,30 +23,20 @@ const authStore = create(persist(
                         message: response.data.message,
                         user: response.data.user,
                         email: data.email,
-                    })
+                    });
+                    return { error: null, message: response.data.message, user: response.data.user };
                 }
             } catch (error) {
-                set({
-                    loading: false,
-                    error: error.response?.data?.message || "Something went wrong",
-                    success: false,
-                    message: null,
-                    user: null,
-                })
+                const errMsg = error.response?.data?.message || "Something went wrong";
+                set({ loading: false, error: errMsg, success: false, message: null, user: null });
+                return { error: errMsg, message: null, user: null };
             }
         },
 
-        // Login User
         loginUser: async (data) => {
+            set({ loading: true, error: null, success: null, message: null, user: null });
             try {
-                set({
-                    loading: true,
-                    error: null,
-                    success: null,
-                    message: null,
-                    user: null,
-                });
-                const response = await authApi.post("/login", {data});
+                const response = await authApi.post("/login", { data });
                 if (response.data.success) {
                     set({
                         loading: false,
@@ -61,171 +44,103 @@ const authStore = create(persist(
                         success: true,
                         message: response.data.message,
                         user: response.data.user,
-                    })
+                    });
+                    return { error: null, message: response.data.message, user: response.data.user };
                 }
             } catch (error) {
-                set({
-                    loading: false,
-                    error: error.response?.data?.message || "Something went wrong",
-                    success: false,
-                    message: null,
-                    user: null,
-                })
+                const errMsg = error.response?.data?.message || "Something went wrong";
+                set({ loading: false, error: errMsg, success: false, message: null, user: null });
+                return { error: errMsg, message: null, user: null };
             }
         },
 
-        // verify user - CORRECTED
         verifyUser: async (data) => {
+            set({ loading: true, error: null, success: null, message: null });
             try {
-                set({
-                    loading: true,
-                    error: null,
-                    success: null,
-                    message: null,
-                })
-                const response = await authApi.post("/verifyotp", {data}); 
+                const response = await authApi.post("/verifyotp", {data});
                 if (response.data.success) {
                     set({
                         loading: false,
                         error: null,
                         success: true,
                         message: response.data.message,
-                        user: response.data.user, 
-                    })
+                        user: response.data.user,
+                    });
+                    return { error: null, message: response.data.message, user: response.data.user , success: true};
                 }
             } catch (error) {
-                set({
-                    loading: false,
-                    error: error.response?.data?.message || "Something went wrong",
-                    success: false,
-                    message: null,
-                    user: null,
-                })
+                const errMsg = error.response?.data?.message || "Something went wrong";
+                set({ loading: false, error: errMsg, success: false, message: null, user: null });
+                return { error: errMsg, message: null, user: null };
             }
         },
 
-        // logout user
         logout: async () => {
+            set({ loading: true, error: null, success: null });
             try {
-                set({
-                    loading: true,
-                    error: null,
-                    success: null,
-                })
-                const response = await authApi.post("/logout"); 
+                const response = await authApi.post("/logout");
                 if (response.data.success) {
-                    set({
-                        loading: false,
-                        error: null,
-                        success: true,
-                        message: response.data.message,
-                        user: null,
-                        email: "",
-                    })
+                    set({ loading: false, error: null, success: true, message: response.data.message, user: null, email: "" });
+                    return { error: null, message: response.data.message };
                 }
             } catch (error) {
-                set({
-                    loading: false,
-                    error: error.response?.data?.message || "Something went wrong",
-                    success: false,
-                    message: null,
-                    user: null,
-                    email: "",
-                })
+                const errMsg = error.response?.data?.message || "Something went wrong";
+                set({ loading: false, error: errMsg, success: false, message: null, user: null, email: "" });
+                return { error: errMsg, message: null };
             }
         },
 
-        // resend Otp 
-        resendOtp: async (data) => {
+        resendOtp: async () => {
+            set({ loading: true, error: null, success: null, message: null });
             try {
-                set({
-                    loading: true,
-                    error: null,
-                    success: null,
-                    message: null,
-                })
-                const response = await authApi.post("/resendotp", {data});
+                const response = await authApi.post("/resendotp");
                 if (response.data.success) {
-                    set({
-                        loading: false,
-                        error: null,
-                        success: true,
-                        message: response.data.message,
-                    })
+                    set({ loading: false, error: null, success: true, message: response.data.message });
+                    return { error: null, message: response.data.message };
                 }
             } catch (error) {
-                set({
-                    loading: false,
-                    error: error.response?.data?.message || "Something went wrong",
-                    success: false,
-                    message: null,
-                })
+                const errMsg = error.response?.data?.message || "Something went wrong";
+                set({ loading: false, error: errMsg, success: false, message: null });
+                return { error: errMsg, message: null };
             }
         },
 
-        //getProfile 
         getProfile: async () => {
+            set({ loading: true, error: null, success: null, message: null });
             try {
-                set({
-                    loading: true,
-                    error: null,
-                    success: null,
-                    message: null,
-                });
                 const response = await authApi.get("/profile");
                 if (response.data.success) {
-                    set({
-                        loading: false,
-                        error: null,
-                        success: true,
-                        message: null,
-                        user: response.data.user,
-                    })
+                    set({ loading: false, error: null, success: true, message: null, user: response.data.user });
+                    return { error: null, user: response.data.user };
                 }
             } catch (error) {
-                set({
-                    loading: false,
-                    error: error.response?.data?.message,
-                    success: false,
-                    message: null,
-                    user: null,
-                })
+                const errMsg = error.response?.data?.message || "Something went wrong";
+                set({ loading: false, error: errMsg, success: false, message: null, user: null });
+                return { error: errMsg, user: null };
             }
         },
 
-        // updateProfile - CORRECTED
         updateProfile: async (data) => {
+            set({ loading: true, error: null, success: null, message: null });
             try {
-                set({
-                    loading: true,
-                    error: null,
-                    success: null,
-                    message: null,
-                })
-                const response = await authApi.put("/profile", {data}); 
+                const response = await authApi.put("/profile", { data });
                 if (response.data.success) {
-                    set({
-                        loading: false,
-                        error: null,
-                        success: true,
-                        message: response.data.message,
-                        user: response.data.user,
-                    })
+                    set({ loading: false, error: null, success: true, message: response.data.message, user: response.data.user });
+                    return { error: null, message: response.data.message, user: response.data.user };
                 }
             } catch (error) {
-                set({
-                    loading: false,
-                    error: error.response?.data?.message || "Something went wrong",
-                    success: false,
-                    message: null,
-                })
+                const errMsg = error.response?.data?.message || "Something went wrong";
+                set({ loading: false, error: errMsg, success: false, message: null });
+                return { error: errMsg, message: null };
             }
         }
+
     }),
     {
         name: "auth",
-        
         getStorage: () => sessionStorage,
+        // ✅ Partialize: only persist user and email, not temporary states like loading/error/message
+        partialize: (state) => ({ user: state.user, email: state.email })
     }
 ));
 
