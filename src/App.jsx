@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify'
 import PageNotFound from './pages/PageNotFound'
 import Register from './pages/Register'
 import Verify from './pages/Verify'
+import ProfilePage from './pages/ProfilePage'
 
 const App = () => {
   return (
@@ -18,6 +19,8 @@ const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/verify' element={<Verify />} />
+          <Route path='*' element={<PageNotFound />} />
+          <Route path='/profile' element={<ProfilePage />} />
         </Routes>
 
         <ToastContainer />

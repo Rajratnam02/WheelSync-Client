@@ -29,7 +29,7 @@ const Navbar = () => {
 
         {/* Profile Circle */}
         { user && (<div className='flex gap-5 items-center justify-center'>
-                      <div className='h-10 cursor-pointer flex items-center justify-center inter-600 text-2xl aspect-square rounded-full border'>
+                      <div onClick={()=>{navigate("/profile")}} className='h-10 cursor-pointer flex items-center justify-center inter-600 text-2xl aspect-square rounded-full border'>
                         <p>{user.name[0]}</p>
                       </div>
                     <button onClick={logout} className='inter-600 cursor-pointer hover:shadow-[0_0px_5px_5px_rgba(0,128,128,0.5)] flex bg-teal-500 rounded px-5 py-3 '>LogOut</button>
