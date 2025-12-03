@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaMotorcycle } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
 import authStore from '../Zustand(State Management)/AuthManagement';
@@ -6,7 +6,13 @@ import authStore from '../Zustand(State Management)/AuthManagement';
 const Navbar = () => {
   const navigate = useNavigate();
   const user = authStore((state) => state.user);
-  const logout = authStore((state) => state.logout);
+  const logout = async () => {
+    await authStore.getState().logout();
+    navigate("/login");
+    window.location.reload();
+  }
+
+
 
   return (
     <div className='px-6 py-4 flex bg-[rgba(30,41,59,0.8)]  backdrop:blur-[10px] fixed top-0 w-screen justify-between items-center'>
@@ -35,7 +41,7 @@ const Navbar = () => {
                     <button onClick={logout} className='inter-600 cursor-pointer hover:shadow-[0_0px_5px_5px_rgba(0,128,128,0.5)] flex bg-teal-500 rounded px-5 py-3 '>LogOut</button>
         </div>)}
         
-        {/* Logout Button */}
+        
         
 
     </div>

@@ -11,7 +11,7 @@ import ProfilePage from './pages/ProfilePage'
 
 const App = () => {
   return (
-    <div className=' bg-zinc-900 text-white'>
+    <div className=' bg-zinc-900  text-white'>
         <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
@@ -19,8 +19,8 @@ const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/verify' element={<Verify />} />
-          <Route path='*' element={<PageNotFound />} />
-          <Route path='/profile' element={<ProfilePage />} />
+          
+          <Route path='/profile/*' element={<ProfilePage />} />
         </Routes>
 
         <ToastContainer />

@@ -14,3 +14,6 @@ const createApi = (path) =>
 export const authApi = createApi("auth");
 export const motorApi = createApi("motor");
 export const orderApi = createApi("order");
+export const paymentApi = createApi("payment");
+
+
