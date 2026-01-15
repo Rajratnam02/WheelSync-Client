@@ -2,20 +2,31 @@ import React, { useState } from 'react'
 import LoginBlur from '../Components/LoginBlur'
 import { useNavigate } from 'react-router-dom'
 import Blur from '../Components/Blur'
+import authStore from '../zustand/AuthStore'
+import { toast } from 'react-toastify'
 
 const Register = () => {
    const navigate = useNavigate()
-   const [data,setData] = useState({});
    
+   const [data,setData] = useState({});
+   const {registerUser} = authStore();
+
    const handleChange = (e)=>{
-    setData({...data,[e.target.name]:e.target.value});
-    
+    setData({...data,[e.target.name]:e.target.value}); 
    }
 
-   const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    
+    const response = await registerUser(data);
+    if(response.success){
+        toast.success("Registration Successful");
+        alert(response.message)
+        navigate("/verify",{state:{
+            email:data.email}});
+    }else{
+        alert(response.error)
+        toast.error(response.error)
+    }
    }
    
   return (

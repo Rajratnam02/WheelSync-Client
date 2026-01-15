@@ -3,6 +3,7 @@ import Navbar from '../Components/Navbar'
 import Blur from '../Components/Blur'
 import { Route, Routes } from 'react-router-dom'
 import Home from './Home'
+import Profile from './Profile'
 
 const MainApp = () => {
   return (
@@ -11,6 +12,7 @@ const MainApp = () => {
         <Blur />
         <Routes>
             <Route path="/" element={<Home />} />
+            <Route path='/profile' element={<Profile />} />
         </Routes>
     </div>
   )

@@ -1,9 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import LoginBlur from '../Components/LoginBlur'
 import { useNavigate } from 'react-router-dom'
+import authStore from '../zustand/AuthStore';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const navigate = useNavigate();
+    const [data,setData] = useState({});
+    const handleChange = (e)=>{
+        setData({...data,[e.target.name]:e.target.value});
+    }
+
+    const {loginUser} = authStore();
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const response = await loginUser(data);
+        if(response.success){
+            toast.success("Login Successful");
+            navigate("/");
+        }else{
+            toast.error(response.error);
+        }
+
+       }
+
 
   return (
     <div className='min-h-screen flex py-10  text-white items-center justify-center bg-[url("https://images.unsplash.com/photo-1575833885699-bae73b593ca2?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")] bg-cover bg-fixed bg-center '>
@@ -20,16 +41,16 @@ const Login = () => {
             </div>
 
             
-            <form className='w-full space-y-6'>
+            <form onSubmit={handleSubmit} className='w-full space-y-6'>
 
                 <div className='text-start flex flex-col gap-2 w-full'>
                     <h3 className='text-xs font-semibold text-blue-400/80 ml-4 uppercase'>Email Address</h3>
-                    <input type="text" placeholder='driver@wheelsync.com' className='w-full px-6 py-4 bg-white/5 border border-white/10 rounded-full text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:bg-white/10 transition-all' />
+                    <input name='email' onChange={handleChange} type="email" placeholder='driver@wheelsync.com' className='w-full px-6 py-4 bg-white/5 border border-white/10 rounded-full text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:bg-white/10 transition-all' />
                 </div>
 
                 <div className='text-start flex flex-col  gap-2 w-full'>
                     <h3 className='text-xs font-semibold text-blue-400/80 ml-4 uppercase'>Password</h3>
-                    <input type="text" placeholder='driver@wheelsync.com' className='w-full px-6 py-4 bg-white/5 border border-white/10 rounded-full text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:bg-white/10 transition-all' />
+                    <input name='password' onChange={handleChange} type="password" placeholder='driver@wheelsync.com' className='w-full px-6 py-4 bg-white/5 border border-white/10 rounded-full text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:bg-white/10 transition-all' />
                     <div className="text-right">
                         <p className="text-xs text-gray-400 hover:text-blue-300 transition-colors mr-4">Forgot Password?</p>
                     </div>
