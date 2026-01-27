@@ -80,12 +80,12 @@ const authStore = create(persist(
                 const response = await authApi.post("/logout");
                 if (response.data.success) {
                     set({ loading: false, error: null, success: true, message: response.data.message, user: null, email: "" });
-                    return { error: null, message: response.data.message };
+                    return { error: null, message: response.data.message, success: true};
                 }
             } catch (error) {
                 const errMsg = error.response?.data?.message || "Something went wrong";
                 set({ loading: false, error: errMsg, success: false, message: null, user: null, email: "" });
-                return { error: errMsg, message: null };
+                return { error: errMsg, message: null, success: false};
             }
         },
 

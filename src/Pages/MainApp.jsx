@@ -4,6 +4,8 @@ import Blur from '../Components/Blur'
 import { Route, Routes } from 'react-router-dom'
 import Home from './Home'
 import Profile from './Profile'
+import { Explore } from './Explore'
+import Booking from './Booking'
 
 const MainApp = () => {
   return (
@@ -13,6 +15,8 @@ const MainApp = () => {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/explore' element={<Explore />} />
+            <Route path='/booking/:motorId' element={<Booking />} />
         </Routes>
     </div>
   )

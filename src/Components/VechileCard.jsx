@@ -2,7 +2,7 @@ import React from 'react'
 
 const VechileCard = (props) => {
   return (
-    <div className='bg-white/10  backdrop-blur-2xl border border-white/20 rounded-[40px] p-4 flex gap-8 items-center group hover:bg-white/15 transition-all'>
+    <div className='bg-white/10 mt-5 backdrop-blur-2xl border border-white/20 rounded-[40px] p-4 flex gap-8 items-center group hover:bg-white/15 transition-all'>
         <div className='h-32 w-48 rounded-[30px] overflow-hidden'>
             <img className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-700' src={props.motor.imageUrls[0]} alt="" />
         </div>

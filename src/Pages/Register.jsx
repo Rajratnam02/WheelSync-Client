@@ -65,7 +65,7 @@ const Register = () => {
                 </div>
 
                 <button className='bg-linear-to-r from-blue-600 to-blue-400 w-full mt-4 font-bold text-white shadow-lg hover:shadow-blue-500/40 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center py-4 rounded-full'>
-                    Sign In
+                    Sign Up
                 </button>
 
                 </form>

@@ -1,105 +1,154 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { orderApi } from "../api/Api";
+import { orderApi } from "../axios/Api";
 
-const orderManageStore = create(
+
+const orderStore = create(
   persist(
     (set) => ({
       loading: false,
       error: null,
-      success: false,
+      success: null,
       message: null,
 
       order: null,
-      currentRentals: [],  // FIXED
-      history: [],         // FIXED
+      currentRentals: [],
+      history: [],
       myBookinglist: [],
+
       // ======================
       // Create Order
       // ======================
-      createOrder: async (data) => {
+      createOrder: async (payload) => {
         set({ loading: true, error: null, success: null, message: null });
 
         try {
-          const response = await orderApi.post("/create", data);
+          const res = await orderApi.post("/create", payload);
+          const data = res.data;
 
-          if (response?.data?.success) {
-            return set({
+          if (data.success) {
+            set({
               loading: false,
               success: true,
-              error: null,
-              message: response.data.message,
-              order: response.data.order,
+              message: data.message,
+              order: data.order,
             });
           }
-        } catch (error) {
-          set({
+
+          return {
+            success: data.success,
             loading: false,
+            error: null,
+            message: data.message,
+            data: data,
+          };
+        } catch (error) {
+          const errMsg =
+            error?.response?.data?.message ||
+            error.message ||
+            "Something went wrong";
+
+          set({ loading: false, success: false, error: errMsg });
+
+          return {
             success: false,
-            error:
-              error?.response?.data?.message ||
-              error.message ||
-              "Something went wrong",
-          });
+            loading: false,
+            error: errMsg,
+            message: null,
+            data: null,
+          };
         }
       },
 
       // ======================
-      // Update Status
+      // Update Order Status
       // ======================
-      updateStatus: async (data, orderId) => {
+      updateStatus: async (payload, orderId) => {
         set({ loading: true, error: null, success: null, message: null });
 
         try {
-          const response = await orderApi.put(`/status/${orderId}`, data);
+          const res = await orderApi.put(`/status/${orderId}`, payload);
+          const data = res.data;
 
-          if (response?.data?.success) {
-            return set({
+          if (data.success) {
+            set({
               loading: false,
               success: true,
-              error: null,
-              message: response.data.message,
+              message: data.message,
             });
           }
-        } catch (error) {
-          set({
+
+          return {
+            success: data.success,
             loading: false,
+            error: null,
+            message: data.message,
+            data: data,
+          };
+        } catch (error) {
+          const errMsg =
+            error?.response?.data?.message ||
+            error.message ||
+            "Something went wrong";
+
+          set({ loading: false, success: false, error: errMsg });
+
+          return {
             success: false,
-            error:
-              error?.response?.data?.message ||
-              error.message ||
-              "Something went wrong",
-          });
+            loading: false,
+            error: errMsg,
+            message: null,
+            data: null,
+          };
         }
       },
 
       // ======================
-      // Get My Rentals (Active Orders)
+      // Get My Rentals
       // ======================
       getMyRentals: async () => {
         set({ loading: true, error: null, success: null, message: null });
 
         try {
-          const response = await orderApi.get("/myrentals");
+          const res = await orderApi.get("/myrentals");
+          const data = res.data;
 
-          if (response?.data?.success) {
-            return set({
+          if (data.success) {
+            set({
               loading: false,
               success: true,
-              currentRentals: response.data.currentRentals || [], // FIXED
-              message: response.data.message,
+              message: data.message,
+              currentRentals: data.currentRentals || [],
             });
           }
+
+          return {
+            success: data.success,
+            loading: false,
+            error: null,
+            message: data.message,
+            data: data,
+          };
         } catch (error) {
+          const errMsg =
+            error?.response?.data?.message ||
+            error.message ||
+            "Something went wrong";
+
           set({
             loading: false,
             success: false,
             currentRentals: [],
-            error:
-              error?.response?.data?.message ||
-              error.message ||
-              "Something went wrong",
+            error: errMsg,
           });
+
+          return {
+            success: false,
+            loading: false,
+            error: errMsg,
+            message: null,
+            data: null,
+          };
         }
       },
 
@@ -110,56 +159,96 @@ const orderManageStore = create(
         set({ loading: true, error: null, success: null, message: null });
 
         try {
-          const response = await orderApi.get("/history");
+          const res = await orderApi.get("/history");
+          const data = res.data;
 
-          if (response?.data?.success) {
-            return set({
+          if (data.success) {
+            set({
               loading: false,
               success: true,
-              history: response.data.history || [], // FIXED
+              history: data.history || [],
             });
           }
+
+          return {
+            success: data.success,
+            loading: false,
+            error: null,
+            message: data.message || null,
+            data: data,
+          };
         } catch (error) {
+          const errMsg =
+            error?.response?.data?.message ||
+            error.message ||
+            "Something went wrong";
+
           set({
             loading: false,
             success: false,
             history: [],
-            error:
-              error?.response?.data?.message ||
-              error.message ||
-              "Something went wrong",
+            error: errMsg,
           });
+
+          return {
+            success: false,
+            loading: false,
+            error: errMsg,
+            message: null,
+            data: null,
+          };
         }
       },
 
+      // ======================
+      // My Booking List
+      // ======================
       getMyBookingList: async () => {
-        try{
-          set({
-            loading: true,
-            error: null,
-            success: null,
-            message: null,
-          })
-          const response = await orderApi.get("/mybookings");
-          if (response?.data?.success){
-            return set({
+        set({ loading: true, error: null, success: null, message: null });
+
+        try {
+          const res = await orderApi.get("/mybookings");
+          const data = res.data;
+
+          if (data.success) {
+            set({
               loading: false,
-              error: null,
               success: true,
-              message: response.data.message,
-              myBookinglist: response.data.orders,
-            })
+              message: data.message,
+              myBookinglist: data.orders,
+            });
+          }
+
+          return {
+            success: data.success,
+            loading: false,
+            error: null,
+            message: data.message,
+            data: data,
+          };
+        } catch (error) {
+          const errMsg =
+            error?.response?.data?.message ||
+            error.message ||
+            "Something went wrong";
+
+          set({
+            loading: false,
+            success: false,
+            message: "Some Error Occurred",
+            error: errMsg,
+          });
+
+          return {
+            success: false,
+            loading: false,
+            error: errMsg,
+            message: "Some Error Occurred",
+            data: null,
+          };
         }
-      }catch(error){
-        set({
-          success: false,
-          loading: null,
-          message: "Some Error Occured",
-           error: error?.response?.data?.message || error.message || "Something went wrong",
-        })
-      }
-      }
-}),
+      },
+    }),
     {
       name: "order-storage",
       partialize: (state) => ({
@@ -171,4 +260,4 @@ const orderManageStore = create(
   )
 );
 
-export default orderManageStore;
+export default orderStore;

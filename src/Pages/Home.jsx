@@ -1,8 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import HomeCard from '../Components/HomeCard'
+import { useNavigate } from 'react-router-dom'
 
 
 const Home = () => {
+    const navigate = useNavigate();
+    const [val, setVal] = useState("Car");
+
+    const handleChange = (e) => {
+        setVal(e.target.value);
+    }
+    const explore = (e) => {
+        e.preventDefault();
+        navigate(`/explore`,
+            {
+                state: {
+                    type: val
+                }
+            }
+        );
+    }
   return (
     <div className='min-h-screen max-w-6xl mx-auto px-6 pb-20 mt-16 text-center flex flex-col  items-center  text-white relative'>
         
@@ -19,14 +36,13 @@ const Home = () => {
             <div className='bg-white/10 backdrop-blur-xl w-2/3 border  border-white/20 p-4 rounded-3xl md:rounded-full shadow-2xl flex flex-col md:flex-row gap-4 items-center justify-center max-w-4xl mx-auto mb-20'>
                <div className='border-r text-start flex-1 border-r-white/20 px-6 py-2'>
                 <p className=' font-semibold  uppercase text-xs text-blue-400'>Vehicle Type</p>
-                <select className='bg-transparent outline-none w-full mt-1 appearance-none'>
-                    <option className="bg-gray-900">All Vehicles</option>
+                <select onChange={handleChange} className='bg-transparent outline-none w-full mt-1 appearance-none'>
                     <option className="bg-gray-900">Cars</option>
-                    <option className="bg-gray-900">Bikes</option>
+                    <option className="bg-gray-900">Bike</option>
                 </select>
                </div>
 
-               <div className='flex-1 bg-linear-to-r from-blue-600 to-blue-400 hover:scale-105 transition-transform py-4 rounded-full font-bold text-lg shadow-lg'>
+               <div onClick={explore} className='flex-1 bg-linear-to-r from-blue-600 to-blue-400 hover:scale-105 transition-transform py-4 rounded-full font-bold text-lg shadow-lg'>
                 Search Wheels
                </div>                     
             </div>

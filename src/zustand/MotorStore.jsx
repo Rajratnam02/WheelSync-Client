@@ -142,11 +142,11 @@ const motorStore = create(
       },
 
       // ---------------- ADD MOTOR ----------------
-      addMotor: async (payload) => {
+      addMotor: async (payLoad) => {
         set({ loading: true, error: null, success: null, message: null });
 
         try {
-          const res = await motorApi.post(`/addMotor`, payload);
+          const res = await motorApi.post(`/`, payLoad);
           const data = res.data;
 
           if (data.success) {
@@ -182,11 +182,11 @@ const motorStore = create(
       },
 
       // ---------------- UPDATE MOTOR ----------------
-      updateMotor: async (motorId, payload) => {
+      updateMotor: async (motorId, data) => {
         set({ loading: true, error: null, success: null, message: null });
 
         try {
-          const res = await motorApi.put(`/motorId/${motorId}`, payload);
+          const res = await motorApi.put(`/motorId/${motorId}`, data);
           const data = res.data;
 
           if (data.success) {
