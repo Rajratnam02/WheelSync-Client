@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../Components/Navbar'
-import Blur from '../Components/Blur'
+import Navbar from '../components/Navbar'
+import Blur from '../components/Blur'
 import { Route, Routes } from 'react-router-dom'
 import Home from './Home'
 import Profile from './Profile'

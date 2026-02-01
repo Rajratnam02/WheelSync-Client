@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import HomeCard from '../Components/HomeCard'
+import HomeCard from '../components/HomeCard'
 import { useNavigate } from 'react-router-dom'
 
 

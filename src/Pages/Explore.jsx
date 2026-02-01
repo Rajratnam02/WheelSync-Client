@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import motorStore from "../zustand/MotorStore";
-import VechGridCard from "../Components/VechGridCard";
+import VechGridCard from "../components/VechGridCard";
 import { LoaderOne } from "../components/ui/loader";
 
 export const Explore = () => {

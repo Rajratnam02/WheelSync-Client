@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import LoginBlur from '../Components/LoginBlur'
+import LoginBlur from '../components/LoginBlur'
 import { useNavigate, useLocation } from 'react-router-dom'
 import authStore from '../zustand/AuthStore'
 import { toast } from 'react-toastify'

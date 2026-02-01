@@ -3,7 +3,7 @@ import axios from "axios";
 
 const createApi = (path) =>
   axios.create({
-    baseURL: `http://localhost:3000/api/${path}`,
+    baseURL: `${import.meta.env.VITE_BASE_URL}/api/${path}`,
     withCredentials: true,
     headers: {
       "Content-Type": "application/json",
