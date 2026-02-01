@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import VechileCard from './VechileCard'; // Assuming same directory
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
+import { LoaderOne } from './ui/loader';
 
 const Garage = (props) => {
   // 1. LOCAL FLEET DATA (Using your schema)
@@ -9,9 +10,17 @@ const Garage = (props) => {
   const setAddMotorActive = props.setAddMotorActive
   const setMotorId = props.setMotorId
   const setEditMotors = props.setEditMotors
-
+  const loading = props.loading
   const clickHanlder = () => {
     setAddMotorActive(true);
+  }
+
+  if(loading){
+    return (
+    <div className='flex justify-center items-center mt-8 px-4 min-h-[200px]'>
+          <LoaderOne />
+      </div>
+    )
   }
 
   return (

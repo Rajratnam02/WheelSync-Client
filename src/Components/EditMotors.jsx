@@ -13,6 +13,22 @@ const EditMotors = (props) => {
 
   const motorId = props.motorId;
   const updateMotor = motorStore(state => state.updateMotor);
+  const deleteMotor = motorStore(state => state.deleteMotor);
+
+  const deleteHandler = async () => {
+    try{
+      const response = await deleteMotor(motorId);
+      if(response.success){
+        toast.success(response.message);
+        window.location.reload();
+      }else{
+        toast.error(response.error);
+      }
+    }catch(error){
+      toast.error(error.message)
+    }
+
+  }
 
   const submitHandler = async (e) => {
     try{
@@ -46,7 +62,7 @@ const EditMotors = (props) => {
               <p className="text-blue-100 text-[9px] font-bold uppercase tracking-[0.2em]">Update your motor here</p>
             </div>
             <div className='flex justify-end md:justify-center items-center mt-5 w-full '>
-                <p className='font-extrabold text-white hover:text-red-700 cursor-pointer duration-300 transition-all '>Delete Motor</p>
+                <p onClick={deleteHandler} className='font-extrabold text-white hover:text-red-700 cursor-pointer duration-300 transition-all '>Delete Motor</p>
             </div>
         </div>
 

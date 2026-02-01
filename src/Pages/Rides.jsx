@@ -1,9 +1,18 @@
 import React, { useState } from "react";
-import SecVecCard from "../Components/SecVecCard";
-// Adjust path as needed
+import SecVecCard from "../components/SecVecCard";
+import { LoaderOne } from "../components/ui/loader";
+
 
 const Rides = (props) => {
-  // 1. LOCAL MOCK DATA (Matching your order schema)
+  const loading = props.loading
+  if(loading){
+    return (
+      <div className="min-h-[200px] flex items-center justify-center">
+        <LoaderOne />
+      </div>
+    )
+  }
+
   const activeOrders = props.myBookinglist 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">

@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react'
 import authStore from '../zustand/AuthStore';
 import motorStore from '../zustand/MotorStore';
 import { toast } from 'react-toastify';
-import VechileCard from '../Components/VechileCard';
+import VechileCard from '../components/VechileCard';
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import orderStore from '../zustand/OrderStore';
-import SecVecCard from '../Components/SecVecCard';
+import SecVecCard from '../components/SecVecCard';
 import { useNavigate } from 'react-router-dom';
-import Garage from '../Components/Garage';
+import Garage from '../components/Garage';
 import Rides from './Rides';
-import Rentals from '../Components/Rentals';
-import Addmotors from '../Components/Addmotors';
-import EditMotors from '../Components/EditMotors';
+import Rentals from '../components/Rentals';
+import Addmotors from '../components/Addmotors';
+import EditMotors from '../components/EditMotors';
+
 
 
 
@@ -22,7 +23,7 @@ const Profile = () => {
     const getMyBookingList = orderStore(state => state.getMyBookingList);
     const getMyRentals = orderStore(state => state.getMyRentals);
     const [addMotorsActive, setAddMotorActive] = useState(false)
-
+    const [loading, setLoading] = useState([true, true, true]);
     const [myBookinglist, setMyBookingList] = useState([]);
     const [myMotors, setMyMotors] = useState([]);
     const [section, setSection] = useState("garage")
@@ -41,7 +42,7 @@ const Profile = () => {
         const response = await getMyMotors();
         if(response.success){
           setMyMotors(response.data.motors);
-          toast.success("Motors fetched successfully");
+          setLoading(prev => [false, prev[1], prev[2]]);
         }else{
           toast.error(response.error);
         }
@@ -52,7 +53,7 @@ const Profile = () => {
       const response = await getMyBookingList();
       if(response.success){
         setMyBookingList(response.data.orders);
-        toast.success("Booking List fetched successfully");
+        setLoading(prev => [prev[0], false, prev[2]]);
       }else{
         toast.error(response.error);
       }
@@ -63,7 +64,7 @@ const Profile = () => {
       const response = await getMyRentals();
       if(response.success){
         setLendingList(response.data.orders);
-        toast.success("Rentals fetched successfully");
+        setLoading(prev => [prev[0], prev[1], false]);
       }else{
         toast.error(response.error);
       }
@@ -130,7 +131,7 @@ const Profile = () => {
             <div className="bg-white/10 flex-2 backdrop-blur-2xl border border-white/20 rounded-[35px] p-8 flex flex-col justify-center items-center shadow-xl hover:bg-white/15 transition-all">
               <p className='text-3xl mb-2'>🏎️</p><br />
               <p className='text-[9px] text-gray-500 font-black uppercase tracking-widest mb-1'>Fleet Size</p>
-              <h1 className="text-3xl font-black italic tracking-tighter">{user && user.__v}</h1>
+              <h1 className="text-3xl font-black italic tracking-tighter">{myMotors.length}</h1>
             </div>
 
             <div className="bg-white/10 flex-2 backdrop-blur-2xl border border-white/20 rounded-[35px] p-8 flex flex-col justify-center items-center shadow-xl hover:bg-white/15 transition-all">
@@ -154,9 +155,9 @@ const Profile = () => {
           </div>
         </div>
 
-        {section === "garage" && <Garage myMotors={myMotors} setMotorId={setMotorId} setEditMotors={setEditMotors} setAddMotorActive={setAddMotorActive} />}
-        {section === "past-rides" && <Rides myBookinglist={myBookinglist} />}
-        {section === "bookings" && <Rentals rentals={lendingList} />}
+        {section === "garage" && <Garage loading={loading[0]} myMotors={myMotors} setMotorId={setMotorId} setEditMotors={setEditMotors} setAddMotorActive={setAddMotorActive} />}
+        {section === "past-rides" && <Rides loading={loading[1]} myBookinglist={myBookinglist} />}
+        {section === "bookings" && <Rentals loading={loading[2]} rentals={lendingList} />}
 
         
         <div className="w-full flex justify-center items-center  p-3">

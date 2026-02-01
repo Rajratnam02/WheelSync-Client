@@ -1,10 +1,19 @@
-import React, { useState } from "react";
-import SecVecCard from "./SecVecCard"; // Using your exact component
+import React from "react";
 import SecVecCard2 from "./SecVecCard2";
+import { LoaderOne } from "./ui/loader";
 
 const Rentals = (props) => {
-  // 1. LOCAL DATA (History of past rentals)
+  
   const pastRentals = props.rentals
+
+  const loading = props.loading
+    if(loading){
+      return (
+        <div className="min-h-[200px] flex items-center justify-center">
+          <LoaderOne />
+        </div>
+      )
+    }
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
