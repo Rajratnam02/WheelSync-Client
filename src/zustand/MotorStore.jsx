@@ -182,11 +182,11 @@ const motorStore = create(
       },
 
       // ---------------- UPDATE MOTOR ----------------
-      updateMotor: async (motorId, data) => {
+      updateMotor: async (motorId, payLoad) => {
         set({ loading: true, error: null, success: null, message: null });
 
         try {
-          const res = await motorApi.put(`/motorId/${motorId}`, data);
+          const res = await motorApi.put(`/motorId/${motorId}`, payLoad);
           const data = res.data;
 
           if (data.success) {

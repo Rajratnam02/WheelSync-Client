@@ -7,6 +7,8 @@ const Garage = (props) => {
   // 1. LOCAL FLEET DATA (Using your schema)
   const myFleet = props.myMotors
   const setAddMotorActive = props.setAddMotorActive
+  const setMotorId = props.setMotorId
+  const setEditMotors = props.setEditMotors
 
   const clickHanlder = () => {
     setAddMotorActive(true);
@@ -38,7 +40,7 @@ const Garage = (props) => {
             {myFleet.length > 0 ? (
           myFleet.map((vehicle) => (
 
-            <VechileCard key={vehicle.id} motor={vehicle} />
+            <VechileCard key={vehicle.id} motor={vehicle} setMotorId={setMotorId} setEditMotors={setEditMotors} />
           ))
         ) : (
           <div className="py-20 text-center bg-white/5 rounded-[40px] border border-white/10 border-dashed">

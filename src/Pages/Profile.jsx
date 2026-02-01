@@ -12,6 +12,7 @@ import Garage from '../Components/Garage';
 import Rides from './Rides';
 import Rentals from '../Components/Rentals';
 import Addmotors from '../Components/Addmotors';
+import EditMotors from '../Components/EditMotors';
 
 
 
@@ -71,6 +72,8 @@ const Profile = () => {
 
   }, []);
 
+  const [editMotors, setEditMotors] = useState(false);
+  const [motorId, setMotorId] = useState(null);
     
 
 
@@ -98,6 +101,12 @@ const Profile = () => {
   if(addMotorsActive){
     return (
       <Addmotors setAddMotorActive={setAddMotorActive} />
+    )
+  }
+
+  if(editMotors){
+    return (
+      <EditMotors setEditMotors={setEditMotors} motorId={motorId} />
     )
   }
   
@@ -145,7 +154,7 @@ const Profile = () => {
           </div>
         </div>
 
-        {section === "garage" && <Garage myMotors={myMotors} setAddMotorActive={setAddMotorActive} />}
+        {section === "garage" && <Garage myMotors={myMotors} setMotorId={setMotorId} setEditMotors={setEditMotors} setAddMotorActive={setAddMotorActive} />}
         {section === "past-rides" && <Rides myBookinglist={myBookinglist} />}
         {section === "bookings" && <Rentals rentals={lendingList} />}
 

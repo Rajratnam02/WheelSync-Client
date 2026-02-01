@@ -2,7 +2,8 @@ import React from 'react'
 
 const InputBox = (props) => {
     const changeHandler = (e) => {
-        props.setFormData({...props.formData,[e.target.name]:e.target.value})
+        const updatedData = {...props.formData,[e.target.name]: e.target.value}
+        props.setFormData(updatedData)
         console.log(props.formData)
     }
   return (
