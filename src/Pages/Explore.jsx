@@ -2,18 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import motorStore from "../zustand/MotorStore";
 import VechGridCard from "../Components/VechGridCard";
+import { LoaderOne } from "../components/ui/loader";
 
 export const Explore = () => {
   const location = useLocation();
   const [type,setType] = useState(location.state?.type || "Car")
   const [motor, setMotor] = useState([]);
   const getMotors = motorStore(state => state.getMotors);
+  const [loading, setLoading] = useState(true);
 
   useEffect(()=>{
     const fetchMotors = async () => {
       const response = await getMotors(type);
       if(response.success){
         setMotor(response.data.motors);
+        setLoading(false);
+      }else{
+        console.log(response.error);
       }
     }
     fetchMotors();
@@ -22,6 +27,14 @@ export const Explore = () => {
 
    const typeChange = (e) => {
     setType(e.target.name);
+   }
+
+   if(loading){
+    return(
+      <div className="relative min-h-screen flex items-center justify-center">
+        <LoaderOne />
+      </div>
+    )
    }
     
   return (
