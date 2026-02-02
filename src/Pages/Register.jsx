@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import LoginBlur from '../components/LoginBlur'
 import { useNavigate } from 'react-router-dom'
-import Blur from '../Components/Blur'
 import authStore from '../zustand/AuthStore'
 import { toast } from 'react-toastify'
 
