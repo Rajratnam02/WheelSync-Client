@@ -25,33 +25,30 @@ const SecVecCard = (props) => {
       : "bg-yellow-500/15 text-yellow-400";
 
   return (
-    <div className="flex gap-5 p-5 mb-5 rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/10 hover:from-white/10 hover:to-white/15 transition-all cursor-pointer">
+    <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 p-4 sm:p-5 mb-5 rounded-2xl sm:rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/10 hover:from-white/10 hover:to-white/15 transition-all cursor-pointer">
       
-      {/* Image */}
       {motor?.imageUrls?.[0] ? (
         <img
           src={motor.imageUrls[0]}
           alt={motor?.make}
-          className="h-20 w-20 rounded-2xl object-cover shrink-0"
+          className="h-32 sm:h-20 w-full sm:w-20 rounded-xl sm:rounded-2xl object-cover shrink-0"
         />
       ) : (
-        <div className="h-20 w-20 rounded-2xl bg-white/10 flex items-center justify-center text-xs text-gray-400 shrink-0">
+        <div className="h-32 sm:h-20 w-full sm:w-20 rounded-xl sm:rounded-2xl bg-white/10 flex items-center justify-center text-xs text-gray-400 shrink-0">
           No Image
         </div>
       )}
 
-      {/* Content */}
       <div className="flex-1 flex flex-col justify-between">
         
-        {/* Top */}
         <div>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2">
             <h4 className="text-base font-black uppercase italic tracking-tight">
               {motor?.make} {motor?.model}
             </h4>
 
             <span
-              className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${statusColor}`}
+              className={`px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-bold uppercase ${statusColor}`}
             >
               {order?.status}
             </span>
@@ -66,18 +63,17 @@ const SecVecCard = (props) => {
           </p>
         </div>
 
-        {/* Bottom */}
         <div className="flex items-end justify-between mt-4">
-          <div className="text-[10px] text-gray-400 font-bold uppercase space-y-1">
+          <div className="text-[9px] sm:text-[10px] text-gray-400 font-bold uppercase space-y-1">
             <p>Start: {startDate}</p>
             <p>End: {endDate}</p>
           </div>
 
           <div className="text-right">
-            <p className="text-xs text-gray-400 font-bold uppercase">
+            <p className="text-[10px] text-gray-400 font-bold uppercase leading-none">
               Total
             </p>
-            <p className="text-lg font-black text-white">
+            <p className="text-base sm:text-lg font-black text-white">
               ₹{order?.totalPrice}
             </p>
           </div>
