@@ -18,7 +18,7 @@ const Navbar = () => {
         <div className='hidden justify-between gap-8 bg-white/10 px-6 py-2 border border-white/20 text-white rounded-full md:flex items-center'>
             <p className='hover:text-blue-400 cursor-pointer transition'>Rent</p>
             <p className='hover:text-blue-400 cursor-pointer transition'>Lend</p>
-            <p className='hover:text-blue-400 cursor-pointer transition'>How it works</p>
+            <p onClick={()=>{navigate("/working")}} className='hover:text-blue-400 cursor-pointer transition'>How it works</p>
         </div>
 
         {!user && 

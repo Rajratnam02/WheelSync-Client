@@ -8,6 +8,7 @@ import MainApp from './Pages/MainApp'
 import Register from './Pages/Register'
 import { ToastContainer } from 'react-toastify'
 import Verify from './Pages/Verify'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path='/register' element={<Register />} /> 
           <Route path='/verify' element={<Verify />} />
         </Routes>
+        
         <ToastContainer position='top-right' autoClose={3000} />
     </div>
   )
