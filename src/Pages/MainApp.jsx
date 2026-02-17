@@ -8,7 +8,7 @@ import { Explore } from './Explore'
 import Booking from './Booking'
 import Footer from '../components/Footer'
 import gsap from 'gsap'
-import HowItWorks from './Howitworks'
+import HowItWorks from '../Pages/HowItWorks'
 
 
 const MainApp = () => {
