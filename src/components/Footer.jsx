@@ -55,16 +55,10 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Status & Newsletter */}
-          <div className="bg-white/[0.02] border border-white/5 p-6 rounded-[2rem] backdrop-blur-md">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-500">Network Active</span>
-            </div>
-            <h4 className="text-sm font-bold text-white mb-4">Join the Journey</h4>
+          {/* Newsletter - Simplified */}
+          <div className="bg-white/[0.02] border border-white/5 p-8 rounded-[2.5rem] backdrop-blur-md">
+            <h4 className="text-sm font-bold text-white mb-2">Join the Journey</h4>
+            <p className="text-zinc-500 text-xs mb-6">Get updates on new rides near you.</p>
             <div className="relative">
               <input 
                 type="email" 
