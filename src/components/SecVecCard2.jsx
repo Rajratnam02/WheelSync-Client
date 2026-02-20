@@ -18,15 +18,36 @@ const SecVecCard2 = (props) => {
   const changeStatus = orderStore((state) => state.updateStatus);
   const [status, setStatus] = useState(props.order.status);
 
+  // 🔹 For Approve / Reject
   const statusChanger = async (e) => {
     const payLoad = {
       data: {
         status: e.target.value,
       },
     };
+
     const response = await changeStatus(payLoad, props.order._id);
+
     if (response.success) {
       setStatus(e.target.value);
+      toast.success(response.message);
+    } else {
+      toast.error(response.error);
+    }
+  };
+
+  // 🔹 For Mark as Completed
+  const markCompleted = async () => {
+    const payLoad = {
+      data: {
+        status: "Completed",
+      },
+    };
+
+    const response = await changeStatus(payLoad, props.order._id);
+
+    if (response.success) {
+      setStatus("Completed");
       toast.success(response.message);
     } else {
       toast.error(response.error);
@@ -43,6 +64,7 @@ const SecVecCard2 = (props) => {
           src={motor?.imageUrls?.[0] || "https://via.placeholder.com/150"}
           alt=""
         />
+
         {status?.toLowerCase() === "approved" && (
           <div className="absolute top-3 left-3 h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse border-2 border-emerald-900"></div>
         )}
@@ -54,13 +76,16 @@ const SecVecCard2 = (props) => {
           <h4 className="text-xl md:text-2xl font-black uppercase italic tracking-tighter">
             {motor?.make} {motor?.model}
           </h4>
+
           <span
             className={`text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest border 
             ${
               status?.toLowerCase() === "pending"
                 ? "bg-amber-500/20 text-amber-400 border-amber-500/20"
-                : status?.toLowerCase() === "approved" || status?.toLowerCase() === "approved"
+                : status?.toLowerCase() === "approved"
                 ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/20"
+                : status?.toLowerCase() === "completed"
+                ? "bg-blue-500/20 text-blue-400 border-blue-500/20"
                 : "bg-red-500/20 text-red-400 border-red-500/20"
             }`}
           >
@@ -70,13 +95,18 @@ const SecVecCard2 = (props) => {
 
         <div className="grid grid-cols-2 gap-4 md:gap-6 mt-4">
           <div className="flex flex-col">
-            <p className="text-[8px] text-blue-400 font-black uppercase tracking-widest">Borrower</p>
+            <p className="text-[8px] text-blue-400 font-black uppercase tracking-widest">
+              Borrower
+            </p>
             <p className="text-xs md:text-sm font-bold text-white uppercase italic truncate">
               {props.order.borrower?.name || "New Request"}
             </p>
           </div>
+
           <div className="flex flex-col">
-            <p className="text-[8px] text-gray-500 font-black uppercase tracking-widest">Trip Period</p>
+            <p className="text-[8px] text-gray-500 font-black uppercase tracking-widest">
+              Trip Period
+            </p>
             <p className="text-xs md:text-sm font-bold text-gray-300 uppercase italic">
               {startDate} — {endDate}
             </p>
@@ -86,12 +116,18 @@ const SecVecCard2 = (props) => {
 
       {/* 3. ACTION SECTION */}
       <div className="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-4 pt-4 md:pt-0 md:pl-8 border-t md:border-t-0 md:border-l border-white/10">
+        
         <div className="text-left md:text-right">
-          <p className="text-[8px] text-gray-500 font-black uppercase tracking-widest">Total Earnings</p>
-          <p className="text-xl md:text-2xl font-black text-blue-400 italic">₹{props.order.totalPrice}</p>
+          <p className="text-[8px] text-gray-500 font-black uppercase tracking-widest">
+            Total Earnings
+          </p>
+          <p className="text-xl md:text-2xl font-black text-blue-400 italic">
+            ₹{props.order.totalPrice}
+          </p>
         </div>
 
         <div className="flex gap-2">
+          {/* 🔶 Pending */}
           {status?.toLowerCase() === "pending" ? (
             <>
               <button
@@ -101,6 +137,7 @@ const SecVecCard2 = (props) => {
               >
                 Reject
               </button>
+
               <button
                 value="Approved"
                 onClick={statusChanger}
@@ -109,7 +146,19 @@ const SecVecCard2 = (props) => {
                 Approve
               </button>
             </>
+          ) : 
+          
+          /* 🟢 Approved */
+          status?.toLowerCase() === "approved" ? (
+            <button
+              onClick={markCompleted}
+              className="bg-blue-600 hover:bg-blue-500 border border-blue-500 shadow-lg shadow-blue-600/30 px-4 md:px-6 py-2 md:py-2.5 rounded-full text-[9px] font-black uppercase tracking-widest transition-all text-white"
+            >
+              Mark as Completed
+            </button>
           ) : (
+          
+          /* 🔵 Completed / Rejected */
             <button className="bg-white/5 hover:bg-white/10 border border-white/10 px-6 md:px-8 py-2 md:py-2.5 rounded-full text-[9px] font-black uppercase tracking-widest transition-all text-gray-400 hover:text-white">
               View
             </button>
