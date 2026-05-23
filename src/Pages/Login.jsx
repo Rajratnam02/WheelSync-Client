@@ -64,7 +64,7 @@ const Login = () => {
 
                 <form onSubmit={handleSubmit} className='space-y-6'>
                     {/* Honeypot */}
-                    <input type="text" name="botField" value={data.botField} onChange={handleChange} className="hidden" tabIndex="-1" autoComplete="off" />
+                    <input type="text" name="botField" value={data.botField} onChange={handleChange} style={{ position: 'absolute', opacity: 0, width: 0, height: 0, zIndex: -1 }} tabIndex="-1" autoComplete="off" />
 
                     {/* Email */}
                     <div className='space-y-2'>
@@ -106,22 +106,6 @@ const Login = () => {
                         {isSubmitting ? "Signing in..." : "Sign In"}
                     </button>
                 </form>
-
-                <div className="flex items-center w-full my-8">
-                    <div className="flex-grow border-t border-white/10"></div>
-                    <p className="px-4 text-xs text-gray-400 uppercase tracking-tight">Or continue with</p>
-                    <div className="flex-grow border-t border-white/10"></div>
-                </div>
-
-                {/* Social Login */}
-                <div className='flex gap-4'>
-                    <button aria-label="Google" className='flex-1 border border-white/10 py-3.5 rounded-full hover:bg-white/5 transition-colors flex items-center justify-center'>
-                        <img className='h-5' src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/960px-Google_Favicon_2025.svg.png" alt="Google" />
-                    </button>
-                    <button aria-label="Microsoft" className='flex-1 border border-white/10 py-3.5 rounded-full hover:bg-white/5 transition-colors flex items-center justify-center'>
-                        <img className='h-5' src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Microsoft_icon.svg/1280px-Microsoft_icon.svg.png" alt="Microsoft" />
-                    </button>
-                </div>
 
                 <p className='mt-8 text-center text-sm text-gray-400'>
                     Don't have an account?
